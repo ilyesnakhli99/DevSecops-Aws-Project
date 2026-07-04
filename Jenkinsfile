@@ -74,7 +74,7 @@ pipeline {
                     git commit -m "chore: automated image tag update to ${IMAGE_TAG} [skip ci]"
                     
                     # Uses the masked variable dynamically without writing it to code
-                    git push https://${GH_TOKEN}@github.com/ilyesnakhli/DevSecops-Aws-Project.git HEAD:main
+                    git push https://${GH_TOKEN}@github.com/ilyesnakhli99/DevSecops-Aws-Project.git HEAD:main
                 """
             }
         }
