@@ -6,7 +6,7 @@ pipeline {
 
     environment {
         // Define your Docker Hub or AWS ECR repository credentials and tags
-        DOCKER_HUB_USER = 'your-dockerhub-username'
+        DOCKER_HUB_USER = 'ilyesnakhli99'
         IMAGE_NAME      = 'ivolve-flask-app'
         IMAGE_TAG       = "${BUILD_NUMBER}" // Uses the sequential Jenkins build number as a version tag
     }
@@ -29,11 +29,11 @@ pipeline {
         }
 
         // Stage 3: Compile the Docker blueprint into a real frozen container image
-        stage('Docker Build') {
+       stage('Docker Build') {
             steps {
                 echo 'Building the Docker Image...'
-                // Navigates to the Docker folder and compiles the image
-                sh "docker build -t ${DOCKER_HUB_USER}/${IMAGE_NAME}:${IMAGE_TAG} ../Docker/"
+                // Changed from ../Docker/ to ./Docker/
+                sh "docker build -t ${DOCKER_HUB_USER}/${IMAGE_NAME}:${IMAGE_TAG} ./Docker/"
             }
         }
 
