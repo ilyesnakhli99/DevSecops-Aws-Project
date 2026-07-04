@@ -6,7 +6,16 @@ app = Flask(__name__)
 def home():
     return jsonify({
         "status": "success",
-        "message": "Welcome to the second edition of the this time iam the owner of iVolve Production Application!",
+        "message": "Welcome to the iVolve Production Application! 🚀
+
+I am thrilled to welcome you to this second edition—and this time, I am the proud owner of this fully automated, production-grade deployment!
+
+I built this end-to-end framework to showcase how modern cloud-native infrastructures operate. It bridges the gap between raw cloud resources and zero-touch continuous delivery. I truly hope you enjoy exploring the architecture and the engineering that went into making it seamless.
+
+If you have any feedback, insights, or simply want to collaborate, I would love to connect with you!
+📥 Email: ilyesnakhlii188@gmail.com
+
+💼 LinkedIn: ilyes-nakhli",
         "environment": "Amazon EKS (Kubernetes)"
     })
 
