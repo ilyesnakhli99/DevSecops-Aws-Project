@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
       - name: flask-container
-        image: your-dockerhub-username/ivolve-flask-app:1 # Jenkins will dynamically update this tag number!
+        image: ilyesnakhli/ivolve-flask-app:5 # Jenkins will dynamically update this tag number!
         ports:
         - containerPort: 5000
         
