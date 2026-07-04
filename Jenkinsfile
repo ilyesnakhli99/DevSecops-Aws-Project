@@ -28,12 +28,12 @@ pipeline {
             }
         }
 
-        // Stage 3: Compile the Docker blueprint into a real frozen container image
-       stage('Docker Build') {
+       // Stage 3: Compile the Docker blueprint into a real frozen container image
+        stage('Docker Build') {
             steps {
                 echo 'Building the Docker Image...'
-                // Changed from ../Docker/ to ./Docker/
-                sh "docker build -t ${DOCKER_HUB_USER}/${IMAGE_NAME}:${IMAGE_TAG} ./Docker/"
+                // Run from the repository root (.) and point directly to the Dockerfile (-f)
+                sh "docker build -t ${DOCKER_HUB_USER}/${IMAGE_NAME}:${IMAGE_TAG} -f ./Docker/Dockerfile ."
             }
         }
 
