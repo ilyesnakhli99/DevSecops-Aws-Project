@@ -62,7 +62,7 @@ pipeline {
             echo "Updating deployment manifest version to: ${IMAGE_TAG}"
             
             // 1. Swap the placeholder tag with the fresh build tag
-            sh "sed -i 's|image: ilyesnakhli/ivolve-flask-app:.*|image: ilyesnakhli/ivolve-flask-app:${IMAGE_TAG}|g' kubernetes/deployment.yaml"
+            sh "sed -i 's|image: ilyesnakhli/ivolve-flask-app:.*|image: ilyesnakhli/ivolve-flask-app:${IMAGE_TAG}|g' Kubernetes/deployment.yaml"
             
             // 2. Safely pull the token from the vault and push
             withCredentials([string(credentialsId: 'github-token-id', variable: 'GH_TOKEN')]) {
