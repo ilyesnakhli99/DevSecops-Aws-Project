@@ -80,7 +80,7 @@ pipeline {
         }
     }
 }
-
+    }
     // Post-actions run automatically depending on whether the pipeline succeeded or crashed
     post {
         success {
@@ -92,4 +92,4 @@ pipeline {
         }
     }
 }
-}
+
