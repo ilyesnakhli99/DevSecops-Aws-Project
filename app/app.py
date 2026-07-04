@@ -6,7 +6,7 @@ app = Flask(__name__)
 def home():
     return jsonify({
         "status": "success",
-        "message": "Welcome to the iVolve Production Application!",
+        "message": "Welcome to the second edition of the this time iam the owner of iVolve Production Application!",
         "environment": "Amazon EKS (Kubernetes)"
     })
 

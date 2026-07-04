@@ -56,15 +56,30 @@ pipeline {
             }
         }
 
-        // Stage 6: Automatically update your Kubernetes deployment files with the new version tag
-        stage('Update GitOps Manifests') {
-            steps {
-                echo "Updating deployment manifest version to: ${IMAGE_TAG}"
-                // This step will clone your separate Kubernetes deployment repo, 
-                // swap the old tag for the new ${IMAGE_TAG}, and commit it back to Git.
+     stage('Update GitOps Manifests') {
+    steps {
+        script {
+            echo "Updating deployment manifest version to: ${IMAGE_TAG}"
+            
+            // 1. Swap the placeholder tag with the fresh build tag
+            sh "sed -i 's|image: ilyesnakhli/ivolve-flask-app:.*|image: ilyesnakhli/ivolve-flask-app:${IMAGE_TAG}|g' kubernetes/deployment.yaml"
+            
+            // 2. Safely pull the token from the vault and push
+            withCredentials([string(credentialsId: 'github-token-id', variable: 'GH_TOKEN')]) {
+                sh """
+                    git config user.email "jenkins@ivolve.local"
+                    git config user.name "Jenkins CI"
+                    
+                    git add kubernetes/deployment.yaml
+                    git commit -m "chore: automated image tag update to ${IMAGE_TAG} [skip ci]"
+                    
+                    # Uses the masked variable dynamically without writing it to code
+                    git push https://${GH_TOKEN}@github.com/ilyesnakhli/DevSecops-Aws-Project.git HEAD:main
+                """
             }
         }
     }
+}
 
     // Post-actions run automatically depending on whether the pipeline succeeded or crashed
     post {
