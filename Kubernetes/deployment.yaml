@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
       - name: flask-container
-        image: ilyesnakhli/ivolve-flask-app:12
+        image: ilyesnakhli/ivolve-flask-app:13
         ports:
         - containerPort: 5000
         
