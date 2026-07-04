@@ -6,7 +6,7 @@ pipeline {
 
     environment {
         // Define your Docker Hub or AWS ECR repository credentials and tags
-        DOCKER_HUB_USER = 'ilyesnakhli99'
+        DOCKER_HUB_USER = 'ilyesnakhli'
         IMAGE_NAME      = 'ivolve-flask-app'
         IMAGE_TAG       = "${BUILD_NUMBER}" // Uses the sequential Jenkins build number as a version tag
     }
