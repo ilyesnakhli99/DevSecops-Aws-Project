@@ -70,7 +70,7 @@ pipeline {
                     git config user.email "jenkins@ivolve.local"
                     git config user.name "Jenkins CI"
                     
-                    git add kubernetes/deployment.yaml
+                    git add Kubernetes/deployment.yaml
                     git commit -m "chore: automated image tag update to ${IMAGE_TAG} [skip ci]"
                     
                     # Uses the masked variable dynamically without writing it to code
