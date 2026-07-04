@@ -1,0 +1,53 @@
+# 1. THE DEPLOYMENT (Defines the application pods)
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ivolve-flask-app
+  namespace: production
+  labels:
+    app: ivolve-app
+spec:
+  replicas: 2 # Always run 2 copies of the app across our 2 worker nodes for high availability
+  selector:
+    matchLabels:
+      app: ivolve-app
+  template:
+    metadata:
+      labels:
+        app: ivolve-app
+    spec:
+      containers:
+      - name: flask-container
+        image: your-dockerhub-username/ivolve-flask-app:1 # Jenkins will dynamically update this tag number!
+        ports:
+        - containerPort: 5000
+        
+        # Health Checks: Tells Kubernetes how to monitor if our app is alive or crashing
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 5000
+          initialDelaySeconds: 10
+          periodSeconds: 15
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 5000
+          initialDelaySeconds: 5
+          periodSeconds: 10
+
+---
+# 2. THE SERVICE (The internal load balancer)
+apiVersion: v1
+kind: Service
+metadata:
+  name: ivolve-app-service
+  namespace: production
+spec:
+  type: LoadBalancer # Tells AWS EKS to automatically provision a real physical AWS Application Load Balancer
+  selector:
+    app: ivolve-app
+  ports:
+    - protocol: TCP
+      port: 80        # The public internet will access the app on standard web port 80
+      targetPort: 5000 # The service routes that traffic internally to the container's port 5000
