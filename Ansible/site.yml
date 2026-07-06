@@ -1,0 +1,14 @@
+---
+# Task set for the Jenkins Master Server
+- name: Configure Jenkins Master Node
+  hosts: jenkins_master
+  gather_facts: true
+  roles:
+    - jenkins-master
+
+# Task set for the Jenkins Agent/Slave Server
+- name: Configure Jenkins Agent Node
+  hosts: jenkins_agent
+  gather_facts: true
+  roles:
+    - jenkins-agent

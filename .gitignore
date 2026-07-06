@@ -1,0 +1,13 @@
+# Local backend cache
+.terraform/
+# Terraform state files (CRITICAL SECURITY SHIELD)
+*.tfstate
+*.tfstate.backup
+.terraform.tfstate.lock.info
+
+# Local variables (if you used any)
+*.tfvars
+*.tfvars.json
+
+# Crash logs
+*.log

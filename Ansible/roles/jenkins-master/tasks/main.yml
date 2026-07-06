@@ -1,0 +1,71 @@
+---
+# 1. Update apt cache
+- name: Update apt cache
+  apt:
+    update_cache: yes
+
+# 2. Install OpenJDK 21 and fontconfig (Required for latest Jenkins)
+- name: Install OpenJDK 21 and fontconfig
+  apt:
+    name:
+      - openjdk-21-jdk
+      - fontconfig
+    state: present
+
+## 3. Create keyrings directory structure if it doesn't exist
+- name: Create apt keyrings directory
+  file:
+    path: /etc/apt/keyrings
+    state: directory
+    mode: '0755'
+
+# 4. Download the current official Jenkins GPG signing key
+- name: Download official Jenkins GPG key
+  get_url:
+    url: https://pkg.jenkins.io/debian-stable/jenkins.io-2026.key
+    dest: /etc/apt/keyrings/jenkins-keyring.asc
+    mode: '0644'
+
+# 5. Add the signed Jenkins repository matching the keyring location
+- name: Add Jenkins APT repository
+  apt_repository:
+    repo: "deb [signed-by=/etc/apt/keyrings/jenkins-keyring.asc] https://pkg.jenkins.io/debian-stable binary/"
+    filename: jenkins
+    state: present
+    update_cache: yes
+
+    # === THIS IS THE MISSING TASK TO ADD ===
+# 5.5. Install the Jenkins package binaries
+- name: Install Jenkins Package
+  apt:
+    name: jenkins
+    state: present
+    update_cache: yes
+# =======================================
+
+# === ADD THIS RELOAD TASK HERE ===
+- name: Force systemd to reload handler configs
+  systemd:
+    daemon_reload: yes
+# =================================
+
+# 6. Start and Enable Jenkins Service
+- name: Ensure Jenkins is started and enabled
+  service:
+    name: jenkins
+    state: started
+    enabled: yes
+
+# 7. Generate an SSH Key Pair on the Master so it can connect to the Agent
+- name: Generate SSH key for Jenkins Master
+  user:
+    name: jenkins
+    generate_ssh_key: yes
+    ssh_key_bits: 2048
+    ssh_key_file: .ssh/id_rsa
+  register: master_ssh_key
+
+# 8. Save the public key to a temporary variable so we can pass it to the agent
+- name: Share public key fact
+  set_fact:
+    master_public_key: "{{ master_ssh_key.ssh_public_key }}"
