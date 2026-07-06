@@ -52,6 +52,10 @@ The deployment pipeline is strictly automated from code push to active deploymen
 6. **GitOps Synchronization:** **ArgoCD**, running natively inside the EKS cluster, continuously monitors the manifest repository for differences.
 7. **Automated Reconciliation:** Upon detecting the new image tag commit, ArgoCD pulls the changes and smoothly rolls out the updated **Flask App Pods** across the worker nodes with zero downtime.
 
+### 🚀 Running Application
+Below is a look at the live web application interface running successfully inside the Amazon EKS cluster environment:
+
+![Live Application Interface](./app-screenshot.png)
 ---
 
 ## 📊 Infrastructure Monitoring Loop
