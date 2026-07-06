@@ -8,7 +8,7 @@ A comprehensive, enterprise-grade CI/CD infrastructure for containerized applica
 
 Below is the dynamic, end-to-end architecture flow showing how code moves from an engineer's workstation to a secure AWS environment.
 
-![System Architecture](./architecture.gif)
+![System Architecture](./architecture.gif.svg)
 
 ---
 
